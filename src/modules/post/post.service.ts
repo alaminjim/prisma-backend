@@ -133,6 +133,9 @@ const singlePost = async (id: string) => {
             },
           },
         },
+        _count: {
+          select: { comment: true },
+        },
       },
     });
     return result;
