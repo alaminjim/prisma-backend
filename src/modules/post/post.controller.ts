@@ -46,7 +46,7 @@ const readPost = async (req: Request, res: Response) => {
       sortOrder,
     });
 
-    res.status(200).json({ success: true, data: result });
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ success: false, message: error });
   }

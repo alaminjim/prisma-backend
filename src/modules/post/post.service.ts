@@ -85,6 +85,9 @@ const readPost = async (payload: {
       AND: allPost,
     },
     orderBy: { [payload.sortBy]: payload.sortOrder },
+    include: {
+      _count: { select: { comment: true } },
+    },
   });
 
   const total = await prisma.post.count({
@@ -117,6 +120,20 @@ const singlePost = async (id: string) => {
     });
     const result = await tx.post.findUnique({
       where: { id },
+      include: {
+        comment: {
+          where: {
+            parentId: null,
+          },
+          include: {
+            reply: {
+              include: {
+                reply: true,
+              },
+            },
+          },
+        },
+      },
     });
     return result;
   });
