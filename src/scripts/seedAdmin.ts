@@ -2,16 +2,20 @@ import { prisma } from "../lib/prisma";
 import { Role } from "../types";
 
 async function seedAdmin() {
+  if (!process.env.USER_EMAIL) {
+    throw new Error("USER_EMAIL environment variable is not set");
+  }
+
   const adminData = {
-    name: "admin1",
-    email: "admin1234@gmail.com",
+    name: process.env.USER_NAME,
+    email: process.env.USER_EMAIL,
     role: Role.ADMIN,
-    password: "admin123",
+    password: process.env.USER_PASS,
   };
 
   const isExists = await prisma.user.findUnique({
     where: {
-      email: adminData.email,
+      email: process.env.USER_EMAIL,
     },
   });
 
