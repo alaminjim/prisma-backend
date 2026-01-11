@@ -40,7 +40,7 @@ const deleteComment = async (req: Request, res: Response) => {
       deleteId as string,
       user?.id as string
     );
-    res.status(201).json(result);
+    res.status(201).json({ success: true, data: result });
   } catch (error) {
     res.status(401).json({ success: false, message: error });
   }
